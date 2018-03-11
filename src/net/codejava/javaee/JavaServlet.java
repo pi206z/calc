@@ -32,36 +32,36 @@ public class JavaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		response.setHeader("Content-Type", "text/html; charset=UTF-8");
-		int TB = 4118; //Базовая максимальная тарифная ставка 
-		double KT = 0;  //Коэффициент территории
-		double KBM = 1; //Коэффициент Бонус-Малус, по умолчанию 3 (1)
-		double KVS = 0; //Коэффициент Возраст-стаж (Вычисляется 
-		double KOMultidrive = 1.8; //Для мультидрайва
-		double KM = 0; //Коэффициент мощности
-		double CalculatePrem; //Переменная для расчета страховой премии
+		int TB = 4118; //Р‘Р°Р·РѕРІР°СЏ РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ С‚Р°СЂРёС„РЅР°СЏ СЃС‚Р°РІРєР° 
+		double KT = 0;  //РљРѕСЌС„С„РёС†РёРµРЅС‚ С‚РµСЂСЂРёС‚РѕСЂРёРё
+		double KBM = 1; //РљРѕСЌС„С„РёС†РёРµРЅС‚ Р‘РѕРЅСѓСЃ-РњР°Р»СѓСЃ, РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ 3 (1)
+		double KVS = 0; //РљРѕСЌС„С„РёС†РёРµРЅС‚ Р’РѕР·СЂР°СЃС‚-СЃС‚Р°Р¶ (Р’С‹С‡РёСЃР»СЏРµС‚СЃСЏ 
+		double KOMultidrive = 1.8; //Р”Р»СЏ РјСѓР»СЊС‚РёРґСЂР°Р№РІР°
+		double KM = 0; //РљРѕСЌС„С„РёС†РёРµРЅС‚ РјРѕС‰РЅРѕСЃС‚Рё
+		double CalculatePrem; //РџРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ СЂР°СЃС‡РµС‚Р° СЃС‚СЂР°С…РѕРІРѕР№ РїСЂРµРјРёРё
 		String ResultHtml = "<!DOCTYPE html>  \r\n" + 
 				"<html>\r\n" + 
 				"<head>\r\n" + 
 				"<meta charset=\"UTF-8\">\r\n" + 
 				"<link rel = \"stylesheet\" href = \"style.css\">\r\n" + 
 				"<link href=\"https://fonts.googleapis.com/css?family=Roboto+Slab\" rel=\"stylesheet\">\r\n" + 
-				"<title>Результат</title>\r\n" + 
+				"<title>Р РµР·СѓР»СЊС‚Р°С‚</title>\r\n" + 
 				"</head>\r\n" + 
 				"<body>\r\n" +
 				"<div class=forma>";
-		PrintWriter out = response.getWriter(); //Создаем копию экземпляра класса для вывода текста
-		String UsageMoscow = request.getParameter("UsageMoscow");  //получаем статус выбора чекбокса
+		PrintWriter out = response.getWriter(); //РЎРѕР·РґР°РµРј РєРѕРїРёСЋ СЌРєР·РµРјРїР»СЏСЂР° РєР»Р°СЃСЃР° РґР»СЏ РІС‹РІРѕРґР° С‚РµРєСЃС‚Р°
+		String UsageMoscow = request.getParameter("UsageMoscow");  //РїРѕР»СѓС‡Р°РµРј СЃС‚Р°С‚СѓСЃ РІС‹Р±РѕСЂР° С‡РµРєР±РѕРєСЃР°
 		String UsageSPB = request.getParameter("UsageSPB");
 		String UsageUfa = request.getParameter("UsageUfa");
-		if ((UsageMoscow !=null & UsageSPB == null & UsageUfa == null) || (UsageMoscow ==null & UsageSPB != null & UsageUfa == null) || (UsageMoscow ==null & UsageSPB == null & UsageUfa != null)) //Проверка на выбор хотя бы одного значения региона регистрации
+		if ((UsageMoscow !=null & UsageSPB == null & UsageUfa == null) || (UsageMoscow ==null & UsageSPB != null & UsageUfa == null) || (UsageMoscow ==null & UsageSPB == null & UsageUfa != null)) //РџСЂРѕРІРµСЂРєР° РЅР° РІС‹Р±РѕСЂ С…РѕС‚СЏ Р±С‹ РѕРґРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ СЂРµРіРёРѕРЅР° СЂРµРіРёСЃС‚СЂР°С†РёРё
 			{
 			   if (UsageMoscow !=null & UsageSPB == null & UsageUfa == null) KT=2;
 			   if (UsageMoscow ==null & UsageSPB != null & UsageUfa == null) KT=1.8;
 			   if (UsageMoscow ==null & UsageSPB == null & UsageUfa != null) KT=1.8;
-			   int Power = Integer.parseInt(request.getParameter("Power")); //парсим строковые значения в инт
+			   int Power = Integer.parseInt(request.getParameter("Power")); //РїР°СЂСЃРёРј СЃС‚СЂРѕРєРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РІ РёРЅС‚
 			   int Age = Integer.parseInt(request.getParameter("Age"));
 			   int Experience = Integer.parseInt(request.getParameter("Experience"));
-			   if ((Power >0 & Age >0 & Experience >=0) & (Age >= Experience+18)) // Проверка на ввод валидных значений для расчета
+			   if ((Power >0 & Age >0 & Experience >=0) & (Age >= Experience+18)) // РџСЂРѕРІРµСЂРєР° РЅР° РІРІРѕРґ РІР°Р»РёРґРЅС‹С… Р·РЅР°С‡РµРЅРёР№ РґР»СЏ СЂР°СЃС‡РµС‚Р°
 				{
 				if (Power <=50) KM = 0.6;	
 				if (Power >50 & Power <=70) KM = 1;
@@ -73,15 +73,15 @@ public class JavaServlet extends HttpServlet {
 				if (Age > 22 & Experience <=3) KVS = 1.7;
 				if (Age <22 & Experience >3) KVS = 1.6;	
 				if (Age > 22 & Experience >3) KVS = 1;
-				CalculatePrem = TB * KT * KBM * KVS * KM; //расчет страховой премии
-				CalculatePrem = Math.rint(100.0*CalculatePrem)/100.0; //оставляем два знака после запятой
-				out.println(ResultHtml + "<label>Стоимость ОСАГО:  " + CalculatePrem + " руб.</label><h2>Использованные коэффициенты</h2><h3>TБ (Базовый тариф) =" + TB + "</h3><h3>KT (Коэффициент территории преимущественного использования) =" + KT + "</h3><h3>KБM (Коэффициент 'бонус-малус') =" + KBM + "</h3><h3>КВС (Коэффициент в зависимости от возраста и стажа водителя) =" + KVS + "</h3><h3>КМ (Коэффициент технических характристик ТС) =" + KM + "</h3></div>");
+				CalculatePrem = TB * KT * KBM * KVS * KM; //СЂР°СЃС‡РµС‚ СЃС‚СЂР°С…РѕРІРѕР№ РїСЂРµРјРёРё
+				CalculatePrem = Math.rint(100.0*CalculatePrem)/100.0; //РѕСЃС‚Р°РІР»СЏРµРј РґРІР° Р·РЅР°РєР° РїРѕСЃР»Рµ Р·Р°РїСЏС‚РѕР№
+				out.println(ResultHtml + "<label>РЎС‚РѕРёРјРѕСЃС‚СЊ РћРЎРђР“Рћ:  " + CalculatePrem + " СЂСѓР±.</label><h2>РСЃРїРѕР»СЊР·РѕРІР°РЅРЅС‹Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚С‹</h2><h3>TР‘ (Р‘Р°Р·РѕРІС‹Р№ С‚Р°СЂРёС„) =" + TB + "</h3><h3>KT (РљРѕСЌС„С„РёС†РёРµРЅС‚ С‚РµСЂСЂРёС‚РѕСЂРёРё РїСЂРµРёРјСѓС‰РµСЃС‚РІРµРЅРЅРѕРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ) =" + KT + "</h3><h3>KР‘M (РљРѕСЌС„С„РёС†РёРµРЅС‚ 'Р±РѕРЅСѓСЃ-РјР°Р»СѓСЃ') =" + KBM + "</h3><h3>РљР’РЎ (РљРѕСЌС„С„РёС†РёРµРЅС‚ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РІРѕР·СЂР°СЃС‚Р° Рё СЃС‚Р°Р¶Р° РІРѕРґРёС‚РµР»СЏ) =" + KVS + "</h3><h3>РљРњ (РљРѕСЌС„С„РёС†РёРµРЅС‚ С‚РµС…РЅРёС‡РµСЃРєРёС… С…Р°СЂР°РєС‚СЂРёСЃС‚РёРє РўРЎ) =" + KM + "</h3></div>");
 				}
 				else
-					out.println(ResultHtml + "<h1>Ошибка. Некорректно указано значение полей Возраст, Стаж или мощность ТС</h1"); //эксепшн на ввод невалидных данных
+					out.println(ResultHtml + "<h1>РћС€РёР±РєР°. РќРµРєРѕСЂСЂРµРєС‚РЅРѕ СѓРєР°Р·Р°РЅРѕ Р·РЅР°С‡РµРЅРёРµ РїРѕР»РµР№ Р’РѕР·СЂР°СЃС‚, РЎС‚Р°Р¶ РёР»Рё РјРѕС‰РЅРѕСЃС‚СЊ РўРЎ</h1"); //СЌРєСЃРµРїС€РЅ РЅР° РІРІРѕРґ РЅРµРІР°Р»РёРґРЅС‹С… РґР°РЅРЅС‹С…
 				}
 			   else 
-				   out.println (ResultHtml + "<h1>Ошибка. Необходимо выбрать одно значение города</h1>"); //эксепшн на выбор НЕ одного значения города
+				   out.println (ResultHtml + "<h1>РћС€РёР±РєР°. РќРµРѕР±С…РѕРґРёРјРѕ РІС‹Р±СЂР°С‚СЊ РѕРґРЅРѕ Р·РЅР°С‡РµРЅРёРµ РіРѕСЂРѕРґР°</h1>"); //СЌРєСЃРµРїС€РЅ РЅР° РІС‹Р±РѕСЂ РќР• РѕРґРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РіРѕСЂРѕРґР°
 			}	
 }
 
