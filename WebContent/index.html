@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel = "stylesheet" href = "style.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+<title>Калькулятор ОСАГО</title>
+</head>
+<body>
+   <div class=forma>
+	<h1 align="center">Калькулятор ОСАГО</h1>
+	<form action="result.html" method="post">
+	<h2>Регион использования ТС</h2>
+	<div class="RegionUsage">
+	<br>
+	<input type="checkbox" name="UsageMoscow" id="Moscow"><label for="Moscow" class="toggleMoscow">Москва</label>
+	<input type="checkbox" name="UsageSPB" id="SPB"><label for="SPB" class="toggleSPB">Санкт-Петербург</label>
+	<input type="checkbox" name="UsageUfa" id="Ufa"><label for="Ufa" class="toggleUfa">Уфа</label>
+	<!-- <label id="SPB">Санкт-Петербург<input name="UsageSPB" type="checkbox" value="Санкт-Петербург"></label>
+	<label id="Ufa">Уфа<input name="UsageUfa" type="checkbox" value="Уфа" ></label> --> 
+	</div>
+	<br /> 
+	<h2>Мощность ТС<input required type ="number" min="1" max="700" name ="Power"></h2>
+	<br />
+	<h2>Возраст водителя<input required type ="number" min="18" max="99" name ="Age"></h2>
+	<br />
+	<h2>Стаж водителя<input required type ="number" min="0" max="82" name ="Experience"></input></h2>
+	<input type="submit" id="submit" value="Узнать стоимость">
+	</form>
+	</div>
+	</body>
+</html>

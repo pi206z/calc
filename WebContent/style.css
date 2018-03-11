@@ -1,0 +1,97 @@
+﻿div.forma 
+{
+    height: 10em;
+    position: relative; 
+	}
+div.forma 
+{
+    margin: 0;
+    position: absolute;
+	top: 10%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+	}
+h1
+{
+	font-family: 'Roboto Slab', serif;
+	font-size: 31px;
+	float:center;
+}
+h2
+{
+	
+	font-family: 'Roboto Slab', serif;
+	font-size: 31px;
+}
+input[type=checkbox] 
+{
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+/* Переключалки кнопок */
+input[id=Moscow]:checked ~ .toggleMoscow
+{
+    background-color: #4CAF50; /* Green */
+    color: white;
+	margin: 0 4px;
+    border: 1px solid #4CAF50;
+	border-radius: 6px;
+}
+input[id=SPB]:checked ~ .toggleSPB
+{
+    background-color: #4CAF50; /* Green */
+    color: white;
+	margin: 0 4px;
+    border: 1px solid #4CAF50;
+	border-radius: 6px;
+}
+input[id=Ufa]:checked ~ .toggleUfa
+{
+    background-color: #4CAF50; /* Green */
+    color: white;
+	margin: 0 4px;
+    border: 1px solid #4CAF50;
+	border-radius: 6px;
+}
+input[type=number]
+{
+	float:right;
+	height: 35px;
+	width: 85px;
+	position: relative;
+    border-radius: 3px;
+    border: 1px solid #bfbfc3;
+	font-size: 25px;
+}
+/*Скрыть чекбоксы, для замены на лейблы */
+input[type=submit] {
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    width: 100%;
+    background-color: white;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #4CAF50;
+    border-radius: 6px;
+	font-family: 'Roboto Slab', serif;
+	font-size: 31px;
+}
+
+input[type=submit]:hover {
+	background-color: #4CAF50; /* Green */
+    color: white;
+    background-color: #45a049;
+	font-family: 'Roboto Slab', serif;
+	font-size: 31px;
+}
+.RegionUsage
+{
+	font-family: 'Roboto Slab', serif;
+	font-size: 25px;
+	display: flex;
+    justify-content: space-between;
+}
+
